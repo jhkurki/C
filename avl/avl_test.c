@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <math.h>
 
 // helpers
 
@@ -77,7 +78,11 @@ void assert_avl_tree_invariant(avl_tree *tree) {
 	}
 }
 
-// test data
+// generate test data
+
+int digits(int i) {
+	return i == 0 ? 1 : floor(log10(i)) + 1;
+}
 
 char ** sample_data(int items) {
 	char **data = (char **)malloc(items * sizeof(char *));
@@ -87,12 +92,13 @@ char ** sample_data(int items) {
 	}
 	
 	int i;
-	int digits = 10;
+	int d;
 	
 	for (i = 0; i < items; i++) {
-		char *str = (char *)malloc(digits * sizeof(char));
+		d = digits(i);
+		char *str = (char *)malloc(d * sizeof(char));
 		if (str != NULL) {
-			snprintf(str, digits, "%i", i);	
+			snprintf(str, d, "%i", i);	
 			data[i] = str;
 		}
 	}
